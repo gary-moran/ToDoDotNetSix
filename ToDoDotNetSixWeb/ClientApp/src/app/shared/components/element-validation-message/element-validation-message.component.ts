@@ -45,10 +45,10 @@ export class ElementValidationMessageComponent implements AfterViewInit, OnDestr
   @ViewChild('tooltipVar', { static: true }) tooltip!: NgbTooltip;
 
   tooltipMessageText: string | undefined;
-  statusChange$!: Subscription;
+  statusSubscription!: Subscription;
 
   ngOnDestroy() {
-    this.statusChange$.unsubscribe();
+    this.statusSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -58,7 +58,7 @@ export class ElementValidationMessageComponent implements AfterViewInit, OnDestr
 
     // setup statusChange$ observable
     if (this.model) {
-      this.statusChange$ = this.model.statusChanges.subscribe(() => {
+      this.statusSubscription = this.model.statusChanges.subscribe(() => {
         this.updateTooltipText();
       });
     }
