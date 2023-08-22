@@ -1,0 +1,11 @@
+<div class="container">
+  <div *ngIf="messages.length" id="messageBar" class="alert-messages">
+    <div *ngFor="let message of messages; let i = index" class="alert alert-{{message.type}} alert-dismissible" role="alert">
+      <button type="button" class="btn-close" aria-label="Close" (click)="deleteMessage(message)"></button>
+      <p class="text-center">
+        {{message.message}}
+        <sup *ngIf="(i + 1) > 1" class="text-muted">{{i + 1}}</sup>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+To Do App Testing
+=================
+
+## Pages
+
+* Home Page
+* Login Page
+* Register Page
+* To-do List
+
+## Navigation
+
+### Logged-out
+
+1. Click on "To-do's App" --> Home Page
+2. Click on Home --> Home Page
+3. Click on "To-do List" --> Login Page - you must be logged in to access the To-do List
+4. Click on "register an account" on Home Page --> Register Page
+5. Click on "Register" button on Login Page --> Register Page
+
+### Logged-in
+
+1. Click on "To-do's App" --> Home Page
+2. Click on Home --> Home Page
+3. Click on "To-do List" --> To-do List
+4. Click on "register an account" on Home Page --> Register Page
+
+
+## Login
+
+1. Enter incorrect username --> authorisation error
+2. Enter incorrect password --> authorisation error
+3. Click Cancel --> fields reset
+4. Click on "Register" button --> Register Page
+5. Enter correct credentials --> To-do List
+
+## Logout
+
+1. Click on Logout when Logged-in --> Confirmation Dialog
+  1. Click No --> stay on page and remain logged-in
+  2. Click Yes --> go to Login page and be logged-out
+2. Click on Logout when Logged-out --> nothing
+
+## Register
+
+1. Required --> First Name, Last Name, Email, Username, Password, Confirm Password are all required
+2. Email --> a valid email address must be input
+3. Username --> Must be 4 characters or more, and cannot already exist
+4. Password --> Must be at least 8 characters
+5. Confirm Password --> must match Password
+6. Cancel --> fields reset
+7. Register -->
+  1. If any fields are invalid then will be disabled
+  2. If fields are valid -->
+    1. Create ASP Net User
+    2. Display information message indicating user was created
+    3. Navigated to Login Page
+
+## To-do List
+
+1. List --> 
+  1. Will only display To-do items for the currently logged in user
+  2. Click an item -->
+    1. Select item in List - highlighted
+    2. Select item in Form	
+2. Form - ID --> cannot be edited
+3. Form - Name --> Required; only letters, numbers and space characters is allowed
+4. Form - Description --> Required; only letters, numbers and valid punctuation is allowed
+5. New --> Resets form, focus set to Name
+6. Save --> 
+  1. If any fields are invalid then will be disabled
+  2. Save Dialog -->
+    1. Close --> Close Save Dialog
+    2. Save --> 
+      1. Create or update Todo record with logged in username
+      2. Update List
+      3. Select saved Todo record in List and Form
+      4. Display message indicating Todo was Created/Updated
+7. Delete -->
+  1. Only enabled if a Todo is selected
+  2. Delete Dialog -->
+    1. Close --> Close Delete Dialog
+    2. Delete -->
+	  1. Delete Todo record
+      2. Remove Todo from List
+      3. No Todo is selected in List or Form
+      4. Display message indicating Todo was Deleted

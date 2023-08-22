@@ -1,0 +1,14 @@
+/* Messages */
+
+.alert-messages {
+  position: relative;
+  width: 100%;
+  z-index: 7000;
+  opacity: 0.9;
+}
+
+.alert {
+  position: absolute;
+  width: 100%;
+}
+

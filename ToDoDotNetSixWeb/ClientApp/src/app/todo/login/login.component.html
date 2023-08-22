@@ -1,0 +1,48 @@
+<main class="container" role="main">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h5 class="card-title">Login</h5>
+    </div>
+
+    <div class="card-body">
+
+      <form novalidate (ngSubmit)="onLogin()" [formGroup]="loginForm" *ngIf="loginForm">
+
+        <div class="row g-2">
+
+          <div class="mb-2 form-floating col-md-6">
+            <input class="form-control" id="username" type="text" formControlName="username" placeholder="username" maxLength="40" />
+            <element-validation-message [model]="loginForm.get('username')" *ngIf="!elementHasFocus('username') && isControlInvalid(loginForm.get('username'))"></element-validation-message>
+            <label class="form-label" for="username">Username</label>
+          </div>
+
+          <div class="mb-2 form-floating col-md-6">
+            <input class="form-control" id="password" type="password" formControlName="password" placeholder="password" maxLength="40" />
+            <element-validation-message [model]="loginForm.get('password')" *ngIf="!elementHasFocus('password') && isControlInvalid(loginForm.get('password'))"></element-validation-message>
+            <label class="form-label" for="password">Password</label>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col gap-2 d-flex justify-content-start">
+            <button type="button" class="btn btn-secondary" (click)="onRegister()" [disabled]="isProcessing">Register</button>
+          </div>
+
+          <div class="col gap-2 d-flex justify-content-end">
+            <button type="submit" class="btn btn-secondary" (click)="onLogin()" [disabled]="isProcessing || !this.loginForm.valid">Login</button>
+            <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isProcessing">Cancel</button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</main>

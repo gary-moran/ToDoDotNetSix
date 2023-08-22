@@ -1,0 +1,73 @@
+<main class="container" role="main">
+
+  <div class="card">
+
+    <div class="card-header">
+      <h5 class="card-title">Register</h5>
+    </div>
+
+    <div class="card-body">
+
+      <form novalidate (ngSubmit)="onRegister()" [formGroup]="registerForm" *ngIf="registerForm">
+
+        <div class="row g-2">
+
+          <div class="mb-2 form-floating col-md-6">
+            <input class="form-control" id="firstname" type="text" formControlName="firstname" placeholder="firstname" maxLength="100" />
+            <element-validation-message [model]="registerForm.get('firstname')" *ngIf="!elementHasFocus('firstname') && isControlInvalid(registerForm.get('firstname'))"></element-validation-message>
+            <label class="form-label" for="firstname">First Name</label>
+          </div>
+
+          <div class="mb-2 form-floating col-md-6">
+            <input class="form-control" id="lastname" type="text" formControlName="lastname" placeholder="lastname" maxLength="100" />
+            <element-validation-message [model]="registerForm.get('lastname')" *ngIf="!elementHasFocus('lastname') && isControlInvalid(registerForm.get('lastname'))"></element-validation-message>
+            <label class="form-label" for="lastname">Last Name</label>
+          </div>
+
+        </div>
+
+        <div class="row g-2">
+
+          <div class="mb-2 form-floating col">
+            <input class="form-control" id="email" type="email" formControlName="email" placeholder="email" maxLength="256" />
+            <element-validation-message [model]="registerForm.get('email')" *ngIf="!elementHasFocus('email') && isControlInvalid(registerForm.get('email'))"></element-validation-message>
+            <label class="form-label" for="email">Email</label>
+          </div>
+        </div>
+
+        <div class="row g-2">
+          <div class="mb-2 form-floating col-md-6">
+            <input class="form-control" id="username" type="text" formControlName="username" placeholder="username" maxLength="40" />
+            <element-validation-message [model]="registerForm.get('username')" *ngIf="!elementHasFocus('username') && isControlInvalid(registerForm.get('username'))"></element-validation-message>
+            <label class="form-label" for="username">Username</label>
+          </div>
+
+        </div>
+
+        <div formGroupName="passwordGroup" class="row g-2">
+
+          <div class="mb-2 form-floating col-md-6">
+            <input class="form-control" id="password" type="password" formControlName="password" placeholder="password" maxLength="40" />
+            <element-validation-message [model]="registerForm.get('passwordGroup.password')" *ngIf="!elementHasFocus('password') && isControlInvalid(registerForm.get('passwordGroup.password'))"></element-validation-message>
+            <label class="form-label" for="password">Password</label>
+          </div>
+
+          <div class="mb-2 form-floating col-md-6">
+            <input class="form-control" id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="confirmPassword" maxLength="40" />
+            <element-validation-message [model]="registerForm.get('passwordGroup.confirmPassword')" *ngIf="!elementHasFocus('passwordGroup.confirmPassword') && isControlInvalid(registerForm.get('passwordGroup.confirmPassword'))"></element-validation-message>
+            <element-validation-message [model]="registerForm.get('passwordGroup')" *ngIf="!elementHasFocus('confirmPassword') && registerForm.get('passwordGroup')?.invalid"></element-validation-message>
+            <label class="form-label" for="confirmPassword">Confirm Password</label>
+          </div>
+
+        </div>
+
+        <div class="gap-2 d-flex justify-content-end">
+          <button type="submit" class="btn btn-secondary" (click)="onRegister()" [disabled]="isProcessing || !this.registerForm.valid">Register</button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isProcessing">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</main>

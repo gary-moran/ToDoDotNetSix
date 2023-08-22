@@ -1,0 +1,16 @@
+<div class="modal-header bg-light">
+  <h5 class="modal-title">{{titleText}}</h5>
+  <button type="button" class="btn-close" (click)="onClose();"></button>
+</div>
+<div *ngIf="bodyText" class="modal-body">
+  <p>{{bodyText}}</p>
+</div>
+<div class="modal-footer">
+  <button ngbAutofocus *ngIf="isSaveButton" id="save" type="button" class="btn btn-secondary" (click)="onSave()">Save</button>
+  <button ngbAutofocus *ngIf="isCancelButton" id="cancel" type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+  <button ngbAutofocus *ngIf="isDeleteButton" id="delete" type="button" class="btn btn-secondary" (click)="onDelete()">Delete</button>
+  <button ngbAutofocus *ngIf="isYesButton" id="yes" type="button" class="btn btn-secondary" (click)="onYes()">Yes</button>
+  <button ngbAutofocus *ngIf="isNoButton" id="no" type="button" class="btn btn-secondary" (click)="onNo()">No</button>
+  <button ngbAutofocus *ngIf="isOkButton" id="ok" type="button" class="btn btn-secondary" (click)="onOk()">Ok</button>
+  <button *ngIf="isCloseButton" type="button" class="btn btn-secondary" (click)="onClose()">Close</button>
+</div>
