@@ -45,7 +45,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   }
 
   messages: Message[] = [];
-  messagesSubscription$!: Subscription;
+  messagesSubscription!: Subscription;
   // Default Persist Message Types to Danger
   persistMessageTypes: MessageType[] = [MessageType.Danger]
 
@@ -67,14 +67,14 @@ export class MessageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
-    this.messagesSubscription$.unsubscribe();
+    this.messagesSubscription.unsubscribe();
   }
 
   /**
    * subscribe to Messages
    */
   subscribeToMessages(): void {
-    this.messagesSubscription$ = this.messageService.getMessage().subscribe(message => {
+    this.messagesSubscription = this.messageService.getMessage().subscribe(message => {
       // if there is a message and either the subject matches or no subject is set, then push that message
       if (message && (message.subject === this.subject || this.subject === '')) {
         const msg = this.messages.findIndex(msg => msg.subject === message.subject && msg.type === message.type && msg.message === message.message);
