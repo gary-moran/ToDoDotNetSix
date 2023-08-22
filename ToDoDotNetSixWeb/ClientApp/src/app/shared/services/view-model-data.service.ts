@@ -15,8 +15,9 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs';
+import { EMPTY, take } from 'rxjs';
 import { AppConfigService } from './app-config.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class ViewModelDataService {
 
   apiBaseUrl: string = "";
 
-  constructor(private http: HttpClient, private appConfigService: AppConfigService,) {
+  constructor(private http: HttpClient, private appConfigService: AppConfigService, private authenticationService: AuthenticationService, ) {
     this.appConfigService.AppConfig.pipe(take(1)).subscribe(config => this.apiBaseUrl = config?.WebApi ?? "");
   }
 
@@ -36,7 +37,10 @@ export class ViewModelDataService {
    * @returns View Model
    */
   getViewModel<T>(controller: string, id: number) {
-    return this.http.get<T>(`${this.apiBaseUrl}/api/${controller}/${id}`);
+    if (this.authenticationService.checkAuthenticated())
+      return this.http.get<T>(`${this.apiBaseUrl}/api/${controller}/${id}`);
+    else
+      return EMPTY;
   }
 
   /**
@@ -46,7 +50,10 @@ export class ViewModelDataService {
    * @returns View Model array
    */
   getViewModelList<T>(controller: string) {
-    return this.http.get<T[]>(`${this.apiBaseUrl}/api/${controller}/`);
+    if (this.authenticationService.checkAuthenticated())
+      return this.http.get<T[]>(`${this.apiBaseUrl}/api/${controller}/`);
+    else
+      return EMPTY;
   }
 
   /**
@@ -59,7 +66,10 @@ export class ViewModelDataService {
   * @returns Generic View Model
   */
   actionViewModel<TModel, TReturn>(model: TModel, controller: string, methodName: string) {
-    return this.http.post<TReturn>(`${this.apiBaseUrl}/api/${controller}/${methodName}`, model);
+    if (this.authenticationService.checkAuthenticated())
+      return this.http.post<TReturn>(`${this.apiBaseUrl}/api/${controller}/${methodName}`, model);
+    else
+      return EMPTY;
   }
 
   /**
@@ -70,7 +80,10 @@ export class ViewModelDataService {
   * @returns Generic View Model
   */
   addViewModel<T>(model: T, controller: string) {
-    return this.http.post<T>(`${this.apiBaseUrl}/api/${controller}/`, model, );
+    if (this.authenticationService.checkAuthenticated())
+      return this.http.post<T>(`${this.apiBaseUrl}/api/${controller}/`, model);
+    else
+      return EMPTY;
   }
 
   /**
@@ -82,7 +95,10 @@ export class ViewModelDataService {
   * @returns Generic View Model
   */
   updateViewModel<T>(model: T, controller: string, id: number) {
-    return this.http.put<T>(`${this.apiBaseUrl}/api/${controller}/${id}`, model);
+    if (this.authenticationService.checkAuthenticated())
+      return this.http.put<T>(`${this.apiBaseUrl}/api/${controller}/${id}`, model);
+    else
+      return EMPTY;
   }
 
   /**
@@ -92,7 +108,10 @@ export class ViewModelDataService {
    * @returns true if successful
    */
   deleteViewModel(controller: string, id: number) {
-    return this.http.delete<boolean>(`${this.apiBaseUrl}/api/${controller}/${id}`);
+    if (this.authenticationService.checkAuthenticated())
+      return this.http.delete<boolean>(`${this.apiBaseUrl}/api/${controller}/${id}`);
+    else
+      return EMPTY;
   }
 
 }

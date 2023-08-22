@@ -27,7 +27,6 @@ import { MessageType } from '../models/message-type.enum';
 import { IsTrue } from '../utilities/is-true';
 import { AppConfigService } from './app-config.service';
 import { MessageService } from './message.service';
-import { ViewModelDataService } from './view-model-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +53,7 @@ export class AuthenticationService {
     private httpClient: HttpClient,
     private messageService: MessageService,
     private router: Router,
-    private viewModelDataService: ViewModelDataService
+    private http: HttpClient, 
   ) {
 
     // authenticate and store token
@@ -210,10 +209,10 @@ export class AuthenticationService {
     if (!this.username) {
 
       if (this.userId) {
-        await this.viewModelDataService.actionViewModel<Generic, string>(new Generic(this.userId), "account", "GetUsername").toPromise().then(username => {
+        await this.http.post<string>(`${this.apiBaseUrl}/api/account/GetUsername`, new Generic(this.userId)).toPromise().then(username => {
           if (username)
-              this.username = username;
-          });
+            this.username = username;
+        });
       }
 
     }

@@ -20,12 +20,14 @@ import { MessageComponent } from './components/message/message.component';
 import { ModalDialogComponent } from './components/modal-dialog/modal-dialog.component';
 import { ElementValidationMessageComponent } from './components/element-validation-message/element-validation-message.component';
 import { WhitelistValidatorDirective } from './directives/whitelist';
+import { AutoLogout } from './directives/auto-logout';
 
 @NgModule({
   declarations: [
     MessageComponent,
     ModalDialogComponent,
     WhitelistValidatorDirective,
+    AutoLogout,
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,7 @@ import { WhitelistValidatorDirective } from './directives/whitelist';
     ModalDialogComponent,
     ElementValidationMessageComponent,
     WhitelistValidatorDirective,
+    AutoLogout,
   ]
 })
 export class SharedModule { }
