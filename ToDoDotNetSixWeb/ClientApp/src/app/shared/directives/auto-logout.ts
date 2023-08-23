@@ -3,7 +3,7 @@
 *  System:    ToDo (Web)
 *  Module:    Client App \ Shared \ Directives
 *  Date:      24 MAY 2023
-*  Author:    Craig Wallace (GM)
+*  Author:    Craig Wallace (CW)
 *  Function:  Auto-logout Directive
 *  Notes:     
 *

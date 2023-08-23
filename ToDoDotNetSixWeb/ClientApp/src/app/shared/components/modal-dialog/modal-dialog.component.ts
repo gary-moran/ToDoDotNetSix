@@ -21,7 +21,8 @@ export enum ModalType {
   Cancel,
   Delete,
   YesNo,
-  Ok
+  Ok,
+  OkCancel
 }
 
 export enum ModalReturn {
@@ -87,6 +88,11 @@ export class ModalDialogComponent implements OnInit {
       case ModalType.Ok:
         this.titleText = "";
         this.isOkButton = true;
+        break;
+      case ModalType.OkCancel:
+        this.titleText = "Click OK to continue, else click Cancel";
+        this.isOkButton = true;
+        this.isCancelButton = true;
         break;
     }
 
