@@ -86,7 +86,7 @@ export class RegisterComponent extends PendingChanges implements OnInit {
     this.isProcessing = true;
     const login: Login = new Login(this.registerForm.value);
     login.password = (this.registerForm?.get("passwordGroup.password")?.value ?? "");
-    this.viewModelDataservice.actionViewModel<Login, Login>(login, "account", "New").pipe(take(1)).subscribe(
+    this.viewModelDataservice.actionViewModel<Login, Login>(login, "account", "New", false).pipe(take(1)).subscribe(
       () => {
         this.messageService.sendMessage(new Message("nav-menu", "User successfully created", MessageType.Info));
         this.registerForm.markAsPristine();
