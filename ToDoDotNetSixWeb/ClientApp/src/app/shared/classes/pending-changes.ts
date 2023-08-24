@@ -22,22 +22,22 @@ import { AuthenticationService } from "../services/authentication.service";
 @Injectable()
 export class PendingChanges implements ComponentCanDeactivate {
 
-  formGroup: FormGroup | undefined;
+  private _pendingFormGroup: FormGroup | undefined;
 
   protected set pendingFormGroup(formGroup: FormGroup) {
-    this.formGroup = formGroup;
+    this._pendingFormGroup = formGroup;
   }
 
-  constructor(@Inject(AuthenticationService) private authService: AuthenticationService | undefined = undefined) { }
+  constructor(@Inject(AuthenticationService) private pendingAuthenticationService: AuthenticationService | undefined = undefined) { }
 
   @HostListener('window:beforeunload')
   public canDeactivate(): boolean | Observable<boolean> {
 
-    if (!this.formGroup)
+    if (!this._pendingFormGroup)
       return true;
-    if (this.authService && !this.authService.isAuthenticated())
+    if (this.pendingAuthenticationService && !this.pendingAuthenticationService.isAuthenticated())
       return true;
     else
-      return this.formGroup.pristine;
+      return this._pendingFormGroup.pristine;
   }
 }
