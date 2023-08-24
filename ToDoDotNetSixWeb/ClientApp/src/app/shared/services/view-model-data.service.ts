@@ -34,26 +34,28 @@ export class ViewModelDataService {
    * Get View Model
    * @type T 
    * @param controller Controller Name
+   * @param checkAuthenticated
    * @returns View Model
    */
-  getViewModel<T>(controller: string, id: number) {
-    if (this.authenticationService.checkAuthenticated())
-      return this.http.get<T>(`${this.apiBaseUrl}/api/${controller}/${id}`);
-    else
+  getViewModel<T>(controller: string, id: number, checkAuthenticated: boolean = true) {
+    if (checkAuthenticated && !this.authenticationService.checkAuthenticated())
       return EMPTY;
+
+    return this.http.get<T>(`${this.apiBaseUrl}/api/${controller}/${id}`);
   }
 
   /**
    * Get View Model List
    * @type T 
    * @param controller Controller Name
+   * @param checkAuthenticated
    * @returns View Model array
    */
-  getViewModelList<T>(controller: string) {
-    if (this.authenticationService.checkAuthenticated())
-      return this.http.get<T[]>(`${this.apiBaseUrl}/api/${controller}/`);
-    else
+  getViewModelList<T>(controller: string, checkAuthenticated: boolean = true) {
+    if (checkAuthenticated && !this.authenticationService.checkAuthenticated())
       return EMPTY;
+
+    return this.http.get<T[]>(`${this.apiBaseUrl}/api/${controller}/`);
   }
 
   /**
@@ -63,13 +65,14 @@ export class ViewModelDataService {
   * @param model View Model
   * @param controller Controller Name
   * @param method Method Name
+  * @param checkAuthenticated
   * @returns Generic View Model
   */
-  actionViewModel<TModel, TReturn>(model: TModel, controller: string, methodName: string) {
-    if (this.authenticationService.checkAuthenticated())
-      return this.http.post<TReturn>(`${this.apiBaseUrl}/api/${controller}/${methodName}`, model);
-    else
+  actionViewModel<TModel, TReturn>(model: TModel, controller: string, methodName: string, checkAuthenticated: boolean = true) {
+    if (checkAuthenticated && !this.authenticationService.checkAuthenticated())
       return EMPTY;
+
+    return this.http.post<TReturn>(`${this.apiBaseUrl}/api/${controller}/${methodName}`, model);      
   }
 
   /**
@@ -77,13 +80,14 @@ export class ViewModelDataService {
   * @type T 
   * @param model View Model
   * @param controller Controller Name
+  * @param checkAuthenticated
   * @returns Generic View Model
   */
-  addViewModel<T>(model: T, controller: string) {
-    if (this.authenticationService.checkAuthenticated())
-      return this.http.post<T>(`${this.apiBaseUrl}/api/${controller}/`, model);
-    else
+  addViewModel<T>(model: T, controller: string, checkAuthenticated: boolean = true) {
+    if (checkAuthenticated && !this.authenticationService.checkAuthenticated())
       return EMPTY;
+
+    return this.http.post<T>(`${this.apiBaseUrl}/api/${controller}/`, model);
   }
 
   /**
@@ -92,26 +96,28 @@ export class ViewModelDataService {
   * @param model View Model
   * @param controller Controller Name
   * @param id ID
+  * @param checkAuthenticated
   * @returns Generic View Model
   */
-  updateViewModel<T>(model: T, controller: string, id: number) {
-    if (this.authenticationService.checkAuthenticated())
-      return this.http.put<T>(`${this.apiBaseUrl}/api/${controller}/${id}`, model);
-    else
+  updateViewModel<T>(model: T, controller: string, id: number, checkAuthenticated: boolean = true) {
+    if (checkAuthenticated && !this.authenticationService.checkAuthenticated())
       return EMPTY;
+
+    return this.http.put<T>(`${this.apiBaseUrl}/api/${controller}/${id}`, model);
   }
 
   /**
    * Delete View Model
    * @param controller Controller Name
    * @param id
+   * @param checkAuthenticated
    * @returns true if successful
    */
-  deleteViewModel(controller: string, id: number) {
-    if (this.authenticationService.checkAuthenticated())
-      return this.http.delete<boolean>(`${this.apiBaseUrl}/api/${controller}/${id}`);
-    else
+  deleteViewModel(controller: string, id: number, checkAuthenticated: boolean = true) {
+    if (checkAuthenticated && !this.authenticationService.checkAuthenticated())
       return EMPTY;
+
+    return this.http.delete<boolean>(`${this.apiBaseUrl}/api/${controller}/${id}`);
   }
 
 }

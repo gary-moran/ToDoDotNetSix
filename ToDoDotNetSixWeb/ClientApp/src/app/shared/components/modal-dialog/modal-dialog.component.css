@@ -1,0 +1,7 @@
+.custom-ngb-modal-window {
+  z-index: 99000 !important;
+}
+
+.custom-ngb-modal-backdrop {
+  z-index: 99000 !important;
+}

@@ -22,7 +22,7 @@ import { AuthenticationService } from '../services/authentication.service';
 @Directive({
   selector: 'auto-logout'
 })
-export class AutoLogout implements OnDestroy {
+export class AutoLogoutDirective implements OnDestroy {
 
   constructor(private authenticationService: AuthenticationService, private appConfigService: AppConfigService) { }
 

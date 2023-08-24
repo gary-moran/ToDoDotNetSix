@@ -29,12 +29,14 @@ import { Message } from '../../shared/models/message';
 import { MessageType } from '../../shared/models/message-type.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsernameValidator } from '../../shared/validators/username.validator';
+import { PendingChanges } from '../../shared/classes/pending-changes';
+import { AuthenticationService } from '../../shared/services/authentication.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent extends PendingChanges implements OnInit {
 
   elementHasFocus = ElementFocus.elementHasFocus;
   isControlInvalid = ControlValidation.isInvalid;
@@ -49,8 +51,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private router: Router, private formBuilder: FormBuilder, private whitelistService: WhitelistService, private messageService: MessageService,
-    private viewModelDataservice: ViewModelDataService
-  ) { }
+    private viewModelDataservice: ViewModelDataService, private authenticationService: AuthenticationService
+  ) { super() }
 
   async ngOnInit(): Promise<void> {
     this.nameWhitelist = await this.whitelistService.getWhitelist("NAME");
@@ -58,6 +60,7 @@ export class RegisterComponent implements OnInit {
     this.usernameWhitelist = await this.whitelistService.getWhitelist("USERNAME");
     this.passwordWhitelist = await this.whitelistService.getWhitelist("PASSWORD");
     this.initForm();
+    this.pendingFormGroup = this.registerForm;
   }
 
   /**
@@ -86,6 +89,9 @@ export class RegisterComponent implements OnInit {
     this.viewModelDataservice.actionViewModel<Login, Login>(login, "account", "New").pipe(take(1)).subscribe(
       () => {
         this.messageService.sendMessage(new Message("nav-menu", "User successfully created", MessageType.Info));
+        this.registerForm.markAsPristine();
+        if (this.authenticationService.isAuthenticated())
+          this.authenticationService.logout();
         this.router.navigate(["/login"]);
         this.isProcessing = false;
       },

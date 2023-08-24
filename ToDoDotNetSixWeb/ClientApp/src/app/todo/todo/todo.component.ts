@@ -30,7 +30,7 @@ import { Generic } from '../../shared/models/generic';
 import { Whitelist } from '../../shared/models/whitelist';
 import { WhitelistService } from '../../shared/services/whitelist.service';
 import { TextValidators } from '../../shared/validators/text.validator';
-import { PendingChanges } from '../../shared/directives/pending-changes';
+import { PendingChanges } from '../../shared/classes/pending-changes';
 
 enum State {
   New,
@@ -43,7 +43,6 @@ enum State {
   styleUrls: ['./todo.component.css'],
 })
 export class TodoComponent extends PendingChanges implements OnInit {
-
   elementHasFocus = ElementFocus.elementHasFocus;
   isControlInvalid = ControlValidation.isInvalid;
 
@@ -64,9 +63,9 @@ export class TodoComponent extends PendingChanges implements OnInit {
   }
 
   constructor(
-    private viewModelDataService: ViewModelDataService, private formBuilder: FormBuilder, private messageService: MessageService, private modalDialogService: ModalDialogService,
+    private modalDialogService: ModalDialogService, private viewModelDataService: ViewModelDataService, private formBuilder: FormBuilder, private messageService: MessageService,
     private authenticationService: AuthenticationService, private whitelistService: WhitelistService, 
-  ) { super(); }
+  ) { super(authenticationService); }
 
   async ngOnInit(): Promise<void> {
     this.username = await this.authenticationService.getUsername();

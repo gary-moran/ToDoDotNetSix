@@ -1,10 +1,10 @@
 /**************************************************************************
 *
 *  System:    ToDo (Web)
-*  Module:    Client App \ Shared \ Directives
+*  Module:    Client App \ Shared \ Classes
 *  Date:      23 AUG 2023
 *  Author:    Gary Moran (GM)
-*  Function:  Pending Changes Directive
+*  Function:  Pending Changes
 *  Notes:     
 *
 *                   : History of Amendments :
@@ -13,14 +13,13 @@
 *  23 AUG 2023 GM          Created
 ************************************************************************/
 
-import { Directive, HostListener } from "@angular/core";
+import { HostListener, Inject, Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Observable } from "rxjs";
 import { ComponentCanDeactivate } from "../guards/pending-changes.guard";
+import { AuthenticationService } from "../services/authentication.service";
 
-@Directive({
-  selector: 'pending-changes',
-})
+@Injectable()
 export class PendingChanges implements ComponentCanDeactivate {
 
   formGroup: FormGroup | undefined;
@@ -29,12 +28,16 @@ export class PendingChanges implements ComponentCanDeactivate {
     this.formGroup = formGroup;
   }
 
+  constructor(@Inject(AuthenticationService) private authService: AuthenticationService | undefined = undefined) { }
+
   @HostListener('window:beforeunload')
   public canDeactivate(): boolean | Observable<boolean> {
+
     if (!this.formGroup)
+      return true;
+    if (this.authService && !this.authService.isAuthenticated())
       return true;
     else
       return this.formGroup.pristine;
   }
-
 }

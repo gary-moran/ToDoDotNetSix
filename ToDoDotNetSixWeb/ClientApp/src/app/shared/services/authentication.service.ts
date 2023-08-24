@@ -190,7 +190,7 @@ export class AuthenticationService {
   }
 
   /**
-   * Logs out the user, also any other tabs too
+   * Logs out the user
    */
   logout(): void {
     this.token = "";
