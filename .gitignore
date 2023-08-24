@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 # ToDoDotNetSix
 /ToDoDotNetSixWeb/ClientApp/.angular
+*.js
+*.map

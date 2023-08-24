@@ -33,7 +33,7 @@ export class ModalDialogService {
 
     let modalReturn: ModalReturn = ModalReturn.Close;
 
-    const modal = this.modalService.open(ModalDialogComponent);
+    const modal = this.modalService.open(ModalDialogComponent, { windowClass: "custom-ngb-modal-window", backdropClass: "custom-ngb-modal-backdrop" });
     modal.componentInstance.modalType = modalType;
     if (titleTextOverride)
       modal.componentInstance.titleTextOverride = titleTextOverride;

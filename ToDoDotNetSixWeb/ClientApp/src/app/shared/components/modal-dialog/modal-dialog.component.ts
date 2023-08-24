@@ -13,7 +13,7 @@
 *  03 AUG 2023 GM          Created
 ************************************************************************/
 
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 export enum ModalType {
@@ -21,7 +21,8 @@ export enum ModalType {
   Cancel,
   Delete,
   YesNo,
-  Ok
+  Ok,
+  OkCancel
 }
 
 export enum ModalReturn {
@@ -37,6 +38,8 @@ export enum ModalReturn {
 @Component({
   selector: 'modal-dialog',
   templateUrl: './modal-dialog.component.html',
+  styleUrls: ['./modal-dialog.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalDialogComponent implements OnInit {
   @Input() modalType: ModalType = ModalType.Save;
@@ -87,6 +90,11 @@ export class ModalDialogComponent implements OnInit {
       case ModalType.Ok:
         this.titleText = "";
         this.isOkButton = true;
+        break;
+      case ModalType.OkCancel:
+        this.titleText = "Click OK to continue, else click Cancel";
+        this.isOkButton = true;
+        this.isCancelButton = true;
         break;
     }
 

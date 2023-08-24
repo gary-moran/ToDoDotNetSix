@@ -25,7 +25,7 @@ export class UsernameValidator {
 
   static createValidator(viewModelDataService: ViewModelDataService): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return viewModelDataService.actionViewModel<Generic, boolean>(new Generic(control.value), "account", "IsUsernameAvailable")
+      return viewModelDataService.actionViewModel<Generic, boolean>(new Generic(control.value), "account", "IsUsernameAvailable", false)
         .pipe(
           map(isAvailable => isAvailable ? null : { "usernameValidator-MSG": "This username is not available" }),
           catchError(() => of(null))

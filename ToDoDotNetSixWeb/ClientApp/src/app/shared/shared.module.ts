@@ -19,15 +19,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageComponent } from './components/message/message.component';
 import { ModalDialogComponent } from './components/modal-dialog/modal-dialog.component';
 import { ElementValidationMessageComponent } from './components/element-validation-message/element-validation-message.component';
-import { WhitelistValidatorDirective } from './directives/whitelist';
-import { AutoLogout } from './directives/auto-logout';
+import { WhitelistValidatorDirective } from './directives/whitelist.directive';
+import { AutoLogoutDirective } from './directives/auto-logout.directive';
 
 @NgModule({
   declarations: [
     MessageComponent,
     ModalDialogComponent,
     WhitelistValidatorDirective,
-    AutoLogout,
+    AutoLogoutDirective,
   ],
   imports: [
     CommonModule,
@@ -43,7 +43,7 @@ import { AutoLogout } from './directives/auto-logout';
     ModalDialogComponent,
     ElementValidationMessageComponent,
     WhitelistValidatorDirective,
-    AutoLogout,
+    AutoLogoutDirective,
   ]
 })
 export class SharedModule { }
