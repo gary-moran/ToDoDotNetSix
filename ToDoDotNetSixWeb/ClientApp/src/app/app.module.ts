@@ -27,7 +27,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppConfigInterceptorService } from './shared/interceptors/app-config-interceptor.service';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { AuthenticationInterceptorService } from './shared/interceptors/authentication-interceptor.service';
-import { PendingChangesGuard } from './shared/guards/pending-changes.guard';
 
 export function initApp(appConfigService: AppConfigService) { return () => appConfigService.load(); }
 
@@ -48,7 +47,6 @@ export function initApp(appConfigService: AppConfigService) { return () => appCo
     NgbModule,
   ],
   providers: [
-    PendingChangesGuard,
     AppConfigService,
     {
       provide: APP_INITIALIZER,
