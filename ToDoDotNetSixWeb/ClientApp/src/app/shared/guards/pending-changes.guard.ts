@@ -13,8 +13,8 @@
 *  23 AUG 2023 GM          Created
 ************************************************************************/
 
-import { CanDeactivate } from '@angular/router';
-import { Injectable } from '@angular/core';
+import { CanDeactivateFn, UrlTree } from '@angular/router';
+import { inject } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { ModalDialogService } from '../services/modal-dialog.service';
 import { ModalReturn, ModalType } from '../components/modal-dialog/modal-dialog.component';
@@ -23,25 +23,18 @@ export interface ComponentCanDeactivate {
   canDeactivate: () => boolean | Observable<boolean>;
 }
 
-@Injectable()
-export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate> {
+export const PendingChangesGuard: CanDeactivateFn<ComponentCanDeactivate> = (component: ComponentCanDeactivate): boolean | Observable<boolean | UrlTree> => {
 
-  constructor(private modalDialogService: ModalDialogService, ) { }
+  return component.canDeactivate() ? true : from(dialogConfirm());
 
-  canDeactivate(component: ComponentCanDeactivate): boolean | Observable<boolean> {
+};
 
-    let checkDeactivate: boolean | Observable<boolean> = false;
-    try { checkDeactivate = component?.canDeactivate() ?? true; } catch { checkDeactivate = true;  }
+/**
+ * Confirm Navigate Away
+ * @returns true or false as a promise
+ */
+export async function dialogConfirm(): Promise<boolean> {
 
-    return checkDeactivate ? true : from(this.confirm());
-
-  }
-
-  /**
-   * Confirm Navigate Away
-   * @returns true or false as a promise
-   */
-  async confirm(): Promise<boolean> {
-    return await this.modalDialogService.callModalDialog(ModalType.OkCancel, "You have unsaved changes", "Press Cancel to go back and save these changes, or Ok to continue.") == ModalReturn.Ok;
-  }
+  const modalDialogService: ModalDialogService = inject(ModalDialogService);
+  return await modalDialogService.callModalDialog(ModalType.OkCancel, "You have unsaved changes", "Press Cancel to go back and save these changes, or Ok to continue.") == ModalReturn.Ok;
 }

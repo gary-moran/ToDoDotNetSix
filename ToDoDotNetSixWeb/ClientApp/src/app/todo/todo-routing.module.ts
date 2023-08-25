@@ -23,7 +23,7 @@ import { TodoComponent } from './todo/todo.component';
 
 const routes: Routes = [
   { path: "todo", component: TodoComponent, canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard] },
-  { path: "login", component: LoginComponent, canDeactivate: [PendingChangesGuard] },
+  { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent, canDeactivate: [PendingChangesGuard] },
 ];
 
