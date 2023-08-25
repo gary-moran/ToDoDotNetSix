@@ -15,7 +15,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, Observable, of } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { Message } from '../../shared/models/message';
 import { MessageType } from '../../shared/models/message-type.enum';
 import { Todo } from '../../shared/models/todo';
@@ -43,16 +43,20 @@ enum State {
   styleUrls: ['./todo.component.css'],
 })
 export class TodoComponent extends PendingChanges implements OnInit {
+
+  state: State = State.New;
+  public stateType: typeof State = State;
+
   elementHasFocus = ElementFocus.elementHasFocus;
   isControlInvalid = ControlValidation.isInvalid;
 
   username: string | null = null;
   isProcessing: boolean = false;
-  todos$: Observable<void | Todo[]> | undefined;
+
+  private _todos$ = new BehaviorSubject<Todo[]>([]);
+  todos$ = this._todos$.asObservable();
   todo: Todo = new Todo();
   todoForm!: FormGroup;
-  state: State = State.New;
-  public stateType: typeof State = State;
 
   alphaNumWhitelist: Whitelist = new Whitelist();
   descWhitelist: Whitelist = new Whitelist();
@@ -95,8 +99,10 @@ export class TodoComponent extends PendingChanges implements OnInit {
    */
   refreshList(): void {
     if (this.username !== null)
-      this.todos$ = this.viewModelDataService.actionViewModel<Generic, Todo[]>({ "value": this.username }, "todo", "search")
-        .pipe(catchError(error => of(this.messageService.sendErrorMessage({ "message": error }))));
+      this.viewModelDataService.actionViewModel<Generic, Todo[]>({ "value": this.username }, "todo", "search").pipe(take(1)).subscribe(
+        todos => this._todos$.next(todos),
+        error => this.messageService.sendErrorMessage({ "message": error })
+      )
   }
 
   /**
