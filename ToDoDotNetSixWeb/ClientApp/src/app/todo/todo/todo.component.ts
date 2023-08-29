@@ -26,7 +26,6 @@ import { ModalReturn, ModalType } from '../../shared/components/modal-dialog/mod
 import { ElementFocus } from '../../shared/utilities/element-focus';
 import { ControlValidation } from '../../shared/utilities/control-validation';
 import { AuthenticationService } from '../../shared/services/authentication.service';
-import { Generic } from '../../shared/models/generic';
 import { Whitelist } from '../../shared/models/whitelist';
 import { WhitelistService } from '../../shared/services/whitelist.service';
 import { TextValidators } from '../../shared/validators/text.validator';
@@ -98,11 +97,10 @@ export class TodoComponent extends PendingChanges implements OnInit {
    * Refresh List
    */
   refreshList(): void {
-    if (this.username !== null)
-      this.viewModelDataService.actionViewModel<Generic, Todo[]>({ "value": this.username }, "todo", "search").pipe(take(1)).subscribe(
-        todos => this._todos$.next(todos),
-        error => this.messageService.sendErrorMessage({ "message": error })
-      )
+    this.viewModelDataService.getViewModelList<Todo>("todo").pipe(take(1)).subscribe(
+      todos => this._todos$.next(todos),
+      error => this.messageService.sendErrorMessage({ "message": error })
+    )
   }
 
   /**

@@ -50,12 +50,12 @@
 
           <div class="row g-2">
 
-            <div class="form-floating col-md-4">
+            <div class="form-floating col-4">
               <input class="form-control" id="id" type="text" formControlName="id" readonly placeholder="id" />
               <label class="form-label" for="id">ID</label>
             </div>
 
-            <div class="mb-2 form-floating col-md-8">
+            <div class="mb-2 form-floating col-8">
               <input class="form-control" id="name" type="text" formControlName="name" placeholder="name" maxLength="20" />
               <element-validation-message [model]="todoForm.get('name')" *ngIf="!elementHasFocus('name') && isControlInvalid(todoForm.get('name'))"></element-validation-message>
               <label class="form-label" for="name">Name</label>

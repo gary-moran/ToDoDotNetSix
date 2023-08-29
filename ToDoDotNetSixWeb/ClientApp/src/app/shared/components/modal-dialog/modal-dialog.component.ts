@@ -26,6 +26,7 @@ export enum ModalType {
 }
 
 export enum ModalReturn {
+  Dismiss,
   Save,
   Cancel,
   Delete,
