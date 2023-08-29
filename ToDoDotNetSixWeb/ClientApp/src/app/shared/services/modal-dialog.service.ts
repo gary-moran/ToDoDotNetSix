@@ -39,7 +39,12 @@ export class ModalDialogService {
       modal.componentInstance.titleTextOverride = titleTextOverride;
     if (bodyText)
       modal.componentInstance.bodyText = bodyText;
-    await modal.result.then(result => { modalReturn = result })
+    await modal.result
+      .then(result => { modalReturn = result })
+      .catch(error => {
+      if (error == 1)
+        modalReturn = ModalReturn.Dismiss;
+    });
 
     return modalReturn;
   }

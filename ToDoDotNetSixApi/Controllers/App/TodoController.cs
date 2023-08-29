@@ -31,7 +31,7 @@ using ToDoDotNetSixApi.Data.Repo;
 using ToDoDotNetSixApi.Controllers.Base;
 using ToDoDotNetSixApi.Behaviours.App;
 using ToDoDotNetSixApi.ViewModels.App;
-using ToDoDotNetSixApi.ViewModels.General;
+using ToDoDotNetSixApi.Utilities;
 
 namespace ToDoDotNetSixApi.Controllers.App;
 
@@ -49,7 +49,8 @@ public class TodoController : AuthorizeController
 
     // GET: api/Todo
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TodoViewModel>>> GetTodos() => (await _todoBehaviour.GetAllTodos()).ToList();
+    public async Task<ActionResult<IEnumerable<TodoViewModel>>> GetTodos() 
+        => (await _todoBehaviour.GetTodosByUsername(Username.GetUsername(HttpContext))).ToList();
 
     // GET: api/Todo/5        
     [HttpGet("{id}")]
@@ -75,13 +76,4 @@ public class TodoController : AuthorizeController
     [ServiceFilter(typeof(ValidateIdParam))]
     public async Task<ActionResult<bool>> DeleteTodo(long id)
         => HandleResponse(await _todoBehaviour.DeleteTodo(id));
-
-    /// <summary>
-    /// Search
-    /// </summary>
-    /// <param name="search">Search Generic Model</param>
-    /// <returns></returns>
-    [HttpPost("[action]")]
-    [ServiceFilter(typeof(ValidateModelState))]
-    public async Task<ActionResult<IEnumerable<TodoViewModel>>> Search([FromBody] GenericViewModel search) => (await _todoBehaviour.GetTodosByUsername(search.Value)).ToList();
 }
