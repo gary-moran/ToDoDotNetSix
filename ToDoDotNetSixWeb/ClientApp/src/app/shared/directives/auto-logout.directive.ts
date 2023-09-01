@@ -2,15 +2,15 @@
 *
 *  System:    ToDo (Web)
 *  Module:    Client App \ Shared \ Directives
-*  Date:      24 MAY 2023
-*  Author:    Craig Wallace (CW)
+*  Date:      24 AUG 2023
+*  Author:    Gary Moran (GM)
 *  Function:  Auto-logout Directive
 *  Notes:     
 *
 *                   : History of Amendments :
 *  Date        Name        Brief description                
 *  ----------- ----------  ---------------------------------------------
-*  24 MAY 2023 CW          Created
+*  24 AUG 2023 GM          Created
 ************************************************************************/
 
 import { Directive, OnDestroy } from '@angular/core';
